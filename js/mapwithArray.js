@@ -1,25 +1,43 @@
 function initMap(){
     //map Options
     var options={
-        zoom:8,
+        zoom:12,
         center:{lat:45.4215, lng:-75.6972}
     }
+
     //New map
     let map = new google.maps.Map(document.getElementById('map'),options);
+        /////////////////////////////////////////////////////
+    //          Add event listener to map
+    ////////////////////////////////////////////////////
     
-    //with Image
-    addMarker({props:{lat:45.3939,lng:-75.6831},
-               img:"../img/linkedin.png",
-              content:"<h1>Tosca</h1>"})
-    //with image
-    addMarker({props:{lat:45.4196,lng:-75.6968}
-              ,img:"../img/phone.png",
-              content:"<h1>Stella Luna</h1>"})
-    //without image
-    addMarker({props:{lat:45.4188,lng:-75.6968},
-              content:"<h1>Ottawa</h1>"})
+    google.maps.event.addListener(map, 'click', function(event){
+        addMarker({props:event.latLng});
+    })
     
+    
+    
+    //////////////////////
+    
+    //create array of markerts
+    var markers=[
+        {   props:{lat:45.3939,lng:-75.6831},
+            img:"../img/linkedin.png",
+            content:"<h1>Tosca</h1>"
+        },
+        {
+            props:{lat:45.4196,lng:-75.6968},
+            img:"../img/phone.png",
+            content:"<h1>Stella Luna</h1>"
+        },
+        {
+            props:{lat:45.4188,lng:-75.6968},
+            content:"<h1>Ottawa</h1>"
+        }]
     //Add Marker function
+    markers.forEach(marker=>{
+        addMarker(marker)
+    })
     function addMarker(coords){
         let marker= new google.maps.Marker({
         position:coords.props,
