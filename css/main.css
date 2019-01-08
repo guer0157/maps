@@ -2,3 +2,12 @@
     height:400px;
     width: 100%;
 }
+#cards{
+    display: flex;
+}
+#card{
+    display: flex;
+    border: 1px solid black;
+    width: 7rem;
+    text-align: center;
+}

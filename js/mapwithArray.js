@@ -15,45 +15,38 @@ function initMap(){
         addMarker({props:event.latLng});
     })
     
-    
-    
-    //////////////////////
-    var image = {
-    url: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
-    // This marker is 20 pixels wide by 32 pixels high.
-    size: new google.maps.Size(20, 32),
-    // The origin for this image is (0, 0).
-    origin: new google.maps.Point(0, 0),
-    // The anchor for this image is the base of the flagpole at (0, 32).
-    anchor: new google.maps.Point(0, 32)
-  };
- 
-    
-    //create array of markerts
+    //create array of markers
     var markers=[
-        {   props:{lat:45.3939,lng:-75.6831},
-            img:{url:"../img/linkedin.png",
-                scaledSize: new google.maps.Size(40, 40)
+        {   id:0,
+            props:{lat:45.3931,lng:-75.6831},
+            img:{
+                url:"../img/phone.png",
+                scaledSize: new google.maps.Size(60, 60)
             },
             content:"<h1>Tosca</h1>"
         },
-        {
-            props:{lat:45.4196,lng:-75.6968},
-            img:"../img/phone.png",
+        {   id:1,
+            props:{lat:45.4060,lng:-75.6968},
+            img:{
+                url:"../img/phone.png",
+                scaledSize: new google.maps.Size(60, 60)
+            },
             content:"<h1>Stella Luna</h1>"
         },
-        {
-            props:{lat:45.4188,lng:-75.6968},
+        {   id:2,
+            props:{lat:45.4200,lng:-75.6968},
             content:"<h1>Ottawa</h1>"
         }]
     //Add Marker function
     markers.forEach(marker=>{
+        console.log(marker.img)
         addMarker(marker)
     })
     function addMarker(coords){
         let marker= new google.maps.Marker({
         position:coords.props,
         map:map,
+        myId:coords.id
 //     this works but it's better to handle
 //      undefined values before seeting the icon
 //      icon:coords.img
@@ -69,13 +62,30 @@ function initMap(){
        //This will handle any undefined content values.
         //Check for content   
     if(coords.content){
-                let infoWindow =new google.maps.InfoWindow({
+        let infoWindow = new google.maps.InfoWindow({
         content:coords.content
     })
-    //make event listenrr and pass map and marker
+    //make event listener and pass map and marker
     marker.addListener("click", function(){
+        console.log(marker)
         infoWindow.open(map, marker)
-    })        
+    })
+        
+    let div=document.querySelectorAll("#card")
+    console.log(div)
+    div.forEach(markerTarget=>{
+    markerTarget.addEventListener("click", function(ev){
+        div.forEach(markerOpen=>{
+            infoWindow.close(map, marker)
+        })
+        let dataId=ev.currentTarget.getAttribute("data-id")
+        if(dataId==marker.myId){
+        infoWindow.open(map, marker)
+        }
+    })   
+    }) 
+        
     }
+    
     }
 }
