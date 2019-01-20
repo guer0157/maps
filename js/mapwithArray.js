@@ -40,7 +40,8 @@ function initMap(){
     //Add Marker function
     markers.forEach(marker=>{
         console.log(marker.img)
-        addMarker(marker)
+     addMarker(marker)
+//        console.log(loop)
     })
     function addMarker(coords){
         let marker= new google.maps.Marker({
